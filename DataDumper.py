@@ -7,7 +7,7 @@ def save_results(results, result_path):
     error = list()
 
     for key, value in results.items():
-        if value == "NotFoundException":
+        if value == "Error":
             error.append(key)
 
         else:

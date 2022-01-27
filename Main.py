@@ -10,15 +10,15 @@ def scrape_site():
     excel_input_filename = "Template.xlsx"
     
     options = webdriver.ChromeOptions()
-    options.add_argument("--incognito")
-    #options.add_argument("--headless")
+    #options.add_argument("--incognito")
+    options.add_argument("--headless")
 
     searched_items = read_items(os.path.join(path, excel_input_filename))
 
     aux = set(searched_items)
     if len(aux) != len(searched_items):
         print("Attention, duplicate items")
-
+    aux = None
 
     results = scraper(searched_items, options = options, nr_of_processes = 5)
 
