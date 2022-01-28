@@ -3,12 +3,27 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import os
 
 
 def scraper_logic(item, driver):                #Aici e logica de scraper. Daca aveam un singur site, scriam direct aici
-    #return scrape_wago(item, driver)           #Cum avem 3, consideram functia drept interfata si implementam separat ca sa putem schimba
-    #return scrape_harting(item, driver)        #Implementarea dupa nevoie
-    return scrape_schnider(item, driver)
+                                               #Cum avem 3, consideram functia drept interfata si implementam separat ca sa putem schimba
+                                                #Implementarea dupa nevoie
+
+    choice = {1 : "wago", 2 : "harting", 3 : "schneider"}
+
+    with open(os.path.join("Files", "site.txt")) as f:
+        chosen = int(f.read())
+
+    if chosen == 1:
+        return scrape_wago(item, driver)
+    elif chosen == 2:
+        return scrape_harting(item, driver)
+    elif chosen == 3:
+        return scrape_schnider(item, driver)
+
+    else:
+        raise ValueError("Invalid")
 
 
 
@@ -32,7 +47,7 @@ def scrape_wago(item, driver):
 
 
 def scrape_schnider(item, driver):
-    Timeout_amount = 5
+    Timeout_amount = 10
 
     result = "Error"
     URL = "https://tools.se.app/xref-overhaul/prod/index.html"
@@ -67,7 +82,7 @@ def scrape_schnider(item, driver):
 
 
 def scrape_harting(item, driver):
-    Timeout_amount = 5
+    Timeout_amount = 10
     
     result = "Error"
     URL = "https://b2b.harting.com/ebusiness/ro/"

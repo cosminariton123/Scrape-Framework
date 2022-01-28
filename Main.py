@@ -22,7 +22,7 @@ def scrape_site():
         plt.show()
     aux = None
 
-    results = scraper(searched_items, options = options, nr_of_processes = 1)
+    results = scraper(searched_items, options = options, nr_of_processes = 10)
 
     save_results(results, path)
 
