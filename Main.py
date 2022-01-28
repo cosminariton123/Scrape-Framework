@@ -1,5 +1,6 @@
 from selenium import webdriver
 import os
+from matplotlib import pyplot as plt
 
 from ScraperParalelizationLevel import scraper
 from DataLoader import read_items
@@ -11,16 +12,17 @@ def scrape_site():
     
     options = webdriver.ChromeOptions()
     #options.add_argument("--incognito")
-    options.add_argument("--headless")
+    #options.add_argument("--headless")
 
     searched_items = read_items(os.path.join(path, excel_input_filename))
 
     aux = set(searched_items)
     if len(aux) != len(searched_items):
-        print("Attention, duplicate items")
+        plt.title("Warning, duplicate items in given excel\nClose this window to continue")
+        plt.show()
     aux = None
 
-    results = scraper(searched_items, options = options, nr_of_processes = 15)
+    results = scraper(searched_items, options = options, nr_of_processes = 1)
 
     save_results(results, path)
 
