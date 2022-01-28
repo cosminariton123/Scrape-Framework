@@ -20,7 +20,7 @@ def scrape_site():
         print("Attention, duplicate items")
     aux = None
 
-    results = scraper(searched_items, options = options, nr_of_processes = 5)
+    results = scraper(searched_items, options = options, nr_of_processes = 15)
 
     save_results(results, path)
 
