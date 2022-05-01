@@ -11,10 +11,10 @@ def scraper_logic(item):                #Aici e logica de scraper. Daca aveam un
                                                #Cum avem 3, consideram functia drept interfata si implementam separat ca sa putem schimba
                                                 #Implementarea dupa nevoie
 
-    return scrape_wago(item)
+    #return scrape_wago(item)
     #return scrape_schnider(item)
     #return scrape_harting(item)
-
+    return scrape_harting_description(item)
 
 
 def scrape_wago(item):
@@ -114,6 +114,49 @@ def scrape_harting(item):
         searched_data = TextBox(xpath = "//*[@class=\"newPDP_sidebar__part\" and contains(text(), \"Part number\")]", parent = side_bar, timeout = 1)
         result = searched_data.get_text()
         result = result[13:]
+
+    except TimeoutException:
+        result = "Error"
+
+    return result
+    
+def scrape_harting_description(item):
+    timeout_amount = 10
+    
+    result = "Error"
+    URL = "https://b2b.harting.com/ebusiness/ro/"
+
+    def delete_shadow_section():
+        shadow_section = driver_instance.DRIVER.find_element_by_xpath("/html/body/div[6]")
+        driver_instance.DRIVER.execute_script("""
+        var shadow_section = arguments[0];
+        shadow_section.parentNode.removeChild(shadow_section);
+        """, shadow_section)
+
+    try:
+        driver_instance.DRIVER.get(URL)
+        time.sleep(1)
+
+        delete_shadow_section()
+
+        try:
+            newsletter_window = Button(xpath = "//*[@class=\"popup popup--newsletter\"]", timeout = 4)
+
+            newsletter_x_button = Button(xpath = "//*[@class=\"popup-close\"]", parent=newsletter_window , timeout = 1)
+            newsletter_x_button.click()
+        except:
+            pass
+
+        magnifying_glass = Button(xpath = "//*[@class=\"header-search__button\"]", timeout = timeout_amount)
+        magnifying_glass.click()
+
+        input_field =  InputTextBox(xpath = "//*[@id=\"header-search__input\"]", timeout = timeout_amount)
+        input_field.search(text = item)
+
+
+        side_bar = Button(xpath = "//*[@id=\"sideBarElement\"]", timeout = timeout_amount)
+        searched_data = TextBox(xpath = "//*[@class=\"newPDP_sidebar__name\"]", parent = side_bar, timeout = 1)
+        result = searched_data.get_text()
 
     except TimeoutException:
         result = "Error"
