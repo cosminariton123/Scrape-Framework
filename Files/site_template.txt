@@ -1,3 +1,0 @@
-1: wago
-2: harting
-3: schneider

@@ -1,20 +1,17 @@
-from selenium import webdriver
 import os
 from matplotlib import pyplot as plt
 
-from ScraperParalelizationLevel import scraper
-from DataLoader import read_items
-from DataDumper import save_results
+from scraper.ScraperParalelizationLevel import scraper
+from data_manipulation.DataLoader import read_items
+from data_manipulation.DataDumper import save_results
+
+from config.paths import INPUT_FILES_PATH, EXCEL_INPUT_FILENAME, OUTPUT_FILES_PATH
+from config.other import NR_OF_PROCESSES
 
 def scrape_site():
-    path = "Files"
-    excel_input_filename = "Template.xlsx"
-    
-    options = webdriver.ChromeOptions()
-    #options.add_argument("--incognito")
-    #options.add_argument("--headless")
 
-    searched_items = read_items(os.path.join(path, excel_input_filename))
+
+    searched_items = read_items(os.path.join(INPUT_FILES_PATH, EXCEL_INPUT_FILENAME))
 
     aux = set(searched_items)
     if len(aux) != len(searched_items):
@@ -22,9 +19,9 @@ def scrape_site():
         plt.show()
     aux = None
 
-    results = scraper(searched_items, options = options, nr_of_processes = 10)
+    results = scraper(searched_items, nr_of_processes = NR_OF_PROCESSES)
 
-    save_results(results, path)
+    save_results(results, OUTPUT_FILES_PATH)
 
 def main():
     scrape_site()
