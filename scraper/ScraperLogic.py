@@ -14,7 +14,10 @@ def scraper_logic(item):                #Aici e logica de scraper. Daca aveam un
     #return scrape_wago(item)
     #return scrape_schnider(item)
     #return scrape_harting(item)
-    return scrape_harting_description(item)
+    #return scrape_harting_description(item)
+    #return scrape_klemsan(item)
+    #return scrape_te(item)
+    return scrape_cabur(item)
 
 
 def scrape_wago(item):
@@ -119,7 +122,9 @@ def scrape_harting(item):
         result = "Error"
 
     return result
-    
+
+
+
 def scrape_harting_description(item):
     timeout_amount = 10
     
@@ -163,3 +168,63 @@ def scrape_harting_description(item):
 
     return result
     
+
+
+def scrape_klemsan(item):
+    timeout_amount = 5
+    result = "Error"
+    URL = "https://www.klemsan.com.tr/home"
+
+    try:
+        driver_instance.DRIVER.get(URL)
+
+        search_box = InputTextBox(xpath = "//input[@type=\"text\" and @ name=\"txtSearch\"]", timeout = timeout_amount)
+        search_box.set_text(item)
+
+        searched_data_textbox = TextBox(xpath = "//*[@id=\"divLiveSearchResult\"]/table/tbody/tr[1]/td[3]/a", timeout = timeout_amount)
+        result = searched_data_textbox.get_text()
+
+    except TimeoutException:
+        result = "Error"
+    
+    return result
+
+
+
+def scrape_te(item):
+    timeout_amount = 5
+    result = "Error"
+    URL = "https://www.te.com/usa-en/product-" + item + ".html"
+
+    try:
+        driver_instance.DRIVER.get(URL)
+
+        internal_description_box = Button(xpath = "//li[@class = \"product-description\"]")
+        searched_data = TextBox(xpath = "//span[@class = \"part-basic-detail-value\"]", parent = internal_description_box, timeout = timeout_amount)
+        result = searched_data.get_text()
+
+    except TimeoutException:
+        result = "Error"
+        
+    return result
+
+
+
+def scrape_cabur(item):
+    timeout_amount = 10
+    result = "Error"
+    URL = "http://www.cabur.it/?l=2"
+
+    try:
+        driver_instance.DRIVER.get(URL)
+        
+        search_input_textbox = InputTextBox(xpath = "//input[@type=\"text\" and @name=\"search\"]", timeout = timeout_amount)
+        search_input_textbox.search(item)
+
+        searched_data = TextBox(xpath = "//*[@id=\"leftcolumn\"]/table[1]/tbody[1]/tr[2]/td[3]", timeout = timeout_amount)
+        result = searched_data.get_text()
+
+    except TimeoutException:
+        result = "Error"
+    
+    return result
