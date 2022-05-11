@@ -16,8 +16,8 @@ def scraper_logic(item):                #Aici e logica de scraper. Daca aveam un
     #return scrape_harting(item)
     #return scrape_harting_description(item)
     #return scrape_klemsan(item)
-    return scrape_te(item)
-    #return scrape_cabur(item)
+    #return scrape_te(item)
+    return scrape_cabur(item)
 
 
 def scrape_wago(item):

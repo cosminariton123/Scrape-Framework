@@ -19,7 +19,7 @@ def save_results(results, result_path, input_file_name):
 
 def success_write_file(results, result_path, input_file_name):
     data_frame_ok = pandas.DataFrame(results)
-    data_frame_ok.to_excel(os.path.join(result_path , "Succsess " + input_file_name.split))
+    data_frame_ok.to_excel(os.path.join(result_path , "Succsess " + input_file_name))
 
 def error_write_file(results, result_path, input_file_name):
     data_frame_er = pandas.DataFrame(results)
