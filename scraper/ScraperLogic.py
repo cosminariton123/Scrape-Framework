@@ -16,8 +16,8 @@ def scraper_logic(item):                #Aici e logica de scraper. Daca aveam un
     #return scrape_harting(item)
     #return scrape_harting_description(item)
     #return scrape_klemsan(item)
-    #return scrape_te(item)
-    return scrape_cabur(item)
+    return scrape_te(item)
+    #return scrape_cabur(item)
 
 
 def scrape_wago(item):
@@ -192,14 +192,14 @@ def scrape_klemsan(item):
 
 
 def scrape_te(item):
-    timeout_amount = 5
+    timeout_amount = 10
     result = "Error"
     URL = "https://www.te.com/usa-en/product-" + item + ".html"
 
     try:
         driver_instance.DRIVER.get(URL)
 
-        internal_description_box = Button(xpath = "//li[@class = \"product-description\"]")
+        internal_description_box = Button(xpath = "//li[@class = \"product-description\"]", timeout = timeout_amount)
         searched_data = TextBox(xpath = "//span[@class = \"part-basic-detail-value\"]", parent = internal_description_box, timeout = timeout_amount)
         result = searched_data.get_text()
 

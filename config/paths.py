@@ -18,4 +18,4 @@ INPUT_FILES_PATH = os.path.join(RESOURCESPATH, "input")
 
 OUTPUT_FILES_PATH = os.path.join(RESOURCESPATH, "output")
 
-EXCEL_INPUT_FILENAME = "Cabur.xlsx"
+EXCEL_INPUT_FILENAME = "Error articles TE.xlsx"

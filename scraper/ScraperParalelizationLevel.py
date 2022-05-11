@@ -1,11 +1,11 @@
 import multiprocessing
-import os
+import time
 
 from scraper.ScraperLoopLevel import scraper_loop
 
 
 
-def scraper(searched_items, delay = 0, nr_of_processes = 5):
+def scraper(searched_items, delay = 0, delay_between_process_launches = 0, nr_of_processes = 5):
 
     with multiprocessing.Manager() as manager:
         d = manager.dict()
@@ -37,6 +37,7 @@ def scraper(searched_items, delay = 0, nr_of_processes = 5):
 
         for job in jobs:
             job.start()
+            time.sleep(delay_between_process_launches)
 
         for job in jobs:
             job.join()
