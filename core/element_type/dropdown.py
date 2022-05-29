@@ -1,3 +1,4 @@
+from time import time
 from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 
 from config.default_driver_options import TIMEOUT, STALE_TIMEOUT, NUMBER_OF_TRIES_FOR_STALE_OBJECTS
@@ -22,17 +23,18 @@ class DropDown(WebElement):
         searched_button.scroll_into_view()
 
         ok = False
-        for i in range(NUMBER_OF_TRIES_FOR_STALE_OBJECTS):
+        for _ in range(NUMBER_OF_TRIES_FOR_STALE_OBJECTS):
             try:
                 searched_button.element.click()
                 ok = True
                 break
             except StaleElementReferenceException:
-                searched_button.refresh(timeout=STALE_TIMEOUT)
+                time.sleep(STALE_TIMEOUT)
+                searched_button.refresh(timeout=self._timeout)
             except TimeoutException:
                 self.drop_button.click()
-                self.refresh(timeout=STALE_TIMEOUT)
-                searched_button.refresh(timeout=STALE_TIMEOUT)
+                self.refresh(timeout=self._timeout)
+                searched_button.refresh(timeout=self._timeout)
 
         if ok is False:
             searched_button.click()
@@ -43,5 +45,5 @@ class DropDown(WebElement):
         searched_button = Button(f"//*[text()= \"{text}\"]", parent=self, timeout=self._timeout)
         searched_button.click_js()
 
-    def refresh(self, timeout=STALE_TIMEOUT):
+    def refresh(self, timeout=TIMEOUT):
         self.initialize()

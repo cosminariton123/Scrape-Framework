@@ -1,7 +1,7 @@
 from selenium.common.exceptions import TimeoutException
-from config.default_driver_options import TIMEOUT, STALE_TIMEOUT
+from config.default_driver_options import TIMEOUT
 from config.other import INF
-from core.utils.wrappers import stale_element_reference_fix_loop
+from core.utils.wrappers import stale_element_reference_fix_loop, element_click_intercepted_fix_loop
 import core.drivers.driver_instance as driver_instance
 from abc import ABC, abstractmethod
 
@@ -20,9 +20,10 @@ class WebElement(ABC):
             timeout=timeout
         )
 
-    def refresh(self, timeout=STALE_TIMEOUT):
+    def refresh(self, timeout=TIMEOUT):
         self.__init__(xpath=self.xpath, parent=None, timeout=timeout)
 
+    @element_click_intercepted_fix_loop
     @stale_element_reference_fix_loop
     def scroll_into_view(self):
         driver_instance.DRIVER.execute_script("arguments[0].scrollIntoView();", self.element)

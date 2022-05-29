@@ -7,7 +7,7 @@ from selenium.webdriver.opera.options import Options as OperaOptions
 default_chrome_options = ChromeOptions()
 default_chrome_options.add_argument("--start-maximized")
 default_chrome_options.add_argument("--incognito")
-default_chrome_options.add_argument("--headless")
+#default_chrome_options.add_argument("--headless")
 
 default_edge_options = EdgeOptions()
 #default_edge_options.add_argument("--start-maximized")
@@ -24,4 +24,6 @@ default_opera_options = OperaOptions()
 
 TIMEOUT = 15
 STALE_TIMEOUT = 2
+ELEMENT_CLICK_INTERCEPTED_TIMEOUT = 2
 NUMBER_OF_TRIES_FOR_STALE_OBJECTS = 5
+NUMBER_OF_TRIES_FOR_INTERCEPTED_CLICKS = 5

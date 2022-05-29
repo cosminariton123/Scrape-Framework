@@ -13,11 +13,11 @@ def scraper_logic(item):                #Aici e logica de scraper. Daca aveam un
 
     #return scrape_wago(item)
     #return scrape_schnider(item)
-    #return scrape_harting(item)
+    return scrape_harting(item)
     #return scrape_harting_description(item)
     #return scrape_klemsan(item)
     #return scrape_te(item)
-    return scrape_cabur(item)
+    #return scrape_cabur(item)
 
 
 def scrape_wago(item):
@@ -102,12 +102,12 @@ def scrape_harting(item):
             newsletter_window = Button(xpath = "//*[@class=\"popup popup--newsletter\"]", timeout = 4)
 
             newsletter_x_button = Button(xpath = "//*[@class=\"popup-close\"]", parent=newsletter_window , timeout = 1)
-            newsletter_x_button.click()
+            newsletter_x_button.click_js()
         except:
             pass
 
         magnifying_glass = Button(xpath = "//*[@class=\"header-search__button\"]", timeout = timeout_amount)
-        magnifying_glass.click()
+        magnifying_glass.click_js()
 
         input_field =  InputTextBox(xpath = "//*[@id=\"header-search__input\"]", timeout = timeout_amount)
         input_field.search(text = item)

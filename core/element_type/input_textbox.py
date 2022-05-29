@@ -4,7 +4,7 @@ from config.default_driver_options import TIMEOUT, NUMBER_OF_TRIES_FOR_STALE_OBJ
 from core.element_type.textbox import TextBox
 from selenium.webdriver.common.keys import Keys
 
-from core.utils.wrappers import stale_element_reference_fix_loop
+from core.utils.wrappers import stale_element_reference_fix_loop, element_click_intercepted_fix_loop
 
 
 class InputTextBox(TextBox):
@@ -31,6 +31,7 @@ class InputTextBox(TextBox):
             self.scroll_into_view()
             self.element.send_keys(Keys.ENTER)
 
+    @element_click_intercepted_fix_loop
     @stale_element_reference_fix_loop
     def search(self, text):
         self.scroll_into_view()

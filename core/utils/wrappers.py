@@ -1,24 +1,46 @@
 
 from functools import wraps
 
-from selenium.common.exceptions import StaleElementReferenceException
+import time
 
-from config.default_driver_options import NUMBER_OF_TRIES_FOR_STALE_OBJECTS
+from selenium.common.exceptions import StaleElementReferenceException, ElementClickInterceptedException
 
+from config.default_driver_options import NUMBER_OF_TRIES_FOR_STALE_OBJECTS, NUMBER_OF_TRIES_FOR_INTERCEPTED_CLICKS, STALE_TIMEOUT, ELEMENT_CLICK_INTERCEPTED_TIMEOUT
 
 def stale_element_reference_fix_loop(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         result = None
         ok = False
-        for i in range(NUMBER_OF_TRIES_FOR_STALE_OBJECTS):
+        for _ in range(NUMBER_OF_TRIES_FOR_STALE_OBJECTS):
             try:
                 result = func(*args, **kwargs)
                 ok = True
                 break
             except StaleElementReferenceException:
+                time.sleep(STALE_TIMEOUT)
                 args[0].refresh()       #args[0] is self from method
 
+        if ok is False:
+            result = func(*args, **kwargs)
+        return result
+    return wrapper
+
+
+def element_click_intercepted_fix_loop(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        result = None
+        ok = False
+        for _ in range(NUMBER_OF_TRIES_FOR_INTERCEPTED_CLICKS):
+            try:
+                result = func(*args, **kwargs)
+                ok = True
+                break
+            except ElementClickInterceptedException:
+                time.sleep(ELEMENT_CLICK_INTERCEPTED_TIMEOUT)
+                args[0].refresh() #args[0] is self from method
+        
         if ok is False:
             result = func(*args, **kwargs)
         return result

@@ -2,7 +2,7 @@
 
 from config.default_driver_options import TIMEOUT
 from core.element_type.webelement import WebElement
-from core.utils.wrappers import stale_element_reference_fix_loop
+from core.utils.wrappers import stale_element_reference_fix_loop, element_click_intercepted_fix_loop
 import core.drivers.driver_instance as driver_instance
 
 
@@ -19,11 +19,13 @@ class Button(WebElement):
             timeout=timeout
         )
 
+    @element_click_intercepted_fix_loop
     @stale_element_reference_fix_loop
     def click(self):
         self.scroll_into_view()
         self.element.click()
 
+    @element_click_intercepted_fix_loop
     @stale_element_reference_fix_loop
     def click_js(self):
         self.scroll_into_view()
