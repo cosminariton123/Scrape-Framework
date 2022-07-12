@@ -91,7 +91,7 @@ def scrape_harting(item):
         driver_instance.DRIVER.get(URL)
         time.sleep(1)
 
-        delete_shadow_section_harting(driver_instance)
+        delete_shadow_section_harting(driver_instance = driver_instance, timeout = timeout_amount)
 
         try:
             newsletter_window = Button(xpath = "//*[@class=\"popup popup--newsletter\"]", timeout = 4)
@@ -131,7 +131,7 @@ def scrape_harting_description(item):
         driver_instance.DRIVER.get(URL)
         time.sleep(1)
 
-        delete_shadow_section_harting(driver_instance)
+        delete_shadow_section_harting(driver_instance = driver_instance, timeout = timeout_amount)
 
         try:
             newsletter_window = Button(xpath = "//*[@class=\"popup popup--newsletter\"]", timeout = 4)
