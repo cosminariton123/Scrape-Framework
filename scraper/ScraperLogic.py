@@ -2,6 +2,7 @@ import time
 
 from selenium.common.exceptions import TimeoutException
 
+from scraper.ScraperLogicUtils import delete_shadow_section_harting
 import core.drivers.driver_instance as driver_instance
 from core.element_type.textbox import TextBox
 from core.element_type.button import Button
@@ -85,18 +86,12 @@ def scrape_harting(item):
     result = "Error"
     URL = "https://b2b.harting.com/ebusiness/ro/"
 
-    def delete_shadow_section():
-        shadow_section = driver_instance.DRIVER.find_element_by_xpath("/html/body/div[6]")
-        driver_instance.DRIVER.execute_script("""
-        var shadow_section = arguments[0];
-        shadow_section.parentNode.removeChild(shadow_section);
-        """, shadow_section)
 
     try:
         driver_instance.DRIVER.get(URL)
         time.sleep(1)
 
-        delete_shadow_section()
+        delete_shadow_section_harting(driver_instance)
 
         try:
             newsletter_window = Button(xpath = "//*[@class=\"popup popup--newsletter\"]", timeout = 4)
@@ -131,18 +126,12 @@ def scrape_harting_description(item):
     result = "Error"
     URL = "https://b2b.harting.com/ebusiness/ro/"
 
-    def delete_shadow_section():
-        shadow_section = driver_instance.DRIVER.find_element_by_xpath("/html/body/div[6]")
-        driver_instance.DRIVER.execute_script("""
-        var shadow_section = arguments[0];
-        shadow_section.parentNode.removeChild(shadow_section);
-        """, shadow_section)
 
     try:
         driver_instance.DRIVER.get(URL)
         time.sleep(1)
 
-        delete_shadow_section()
+        delete_shadow_section_harting(driver_instance)
 
         try:
             newsletter_window = Button(xpath = "//*[@class=\"popup popup--newsletter\"]", timeout = 4)
