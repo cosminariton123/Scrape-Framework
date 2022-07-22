@@ -17,8 +17,8 @@ def scraper_logic(item):                #Aici e logica de scraper. Daca aveam un
     #from scraper.implementations import cabur
     #return cabur.scrape_related_product(item)
 
-    #from scraper.implementations import harting
-    #return harting.scrape_related_product(item)
+    from scraper.implementations import harting
+    return harting.scrape_related_product(item)
     #return harting.scrape_description(item)
     
     #from scraper.implementations import klemsan
@@ -33,7 +33,7 @@ def scraper_logic(item):                #Aici e logica de scraper. Daca aveam un
     #from scraper.implementations import wago
     #return wago.scrape_related_product(item)
 
-    from scraper.implementations import weidmueller
-    return weidmueller.scrape_accessories(item)
+    #from scraper.implementations import weidmueller
+    #return weidmueller.scrape_accessories(item)
     #return weidmueller.scrape_related_product(item)
 
