@@ -49,25 +49,25 @@ def scrape_accessories(item):
         accesories_products_button = Button(xpath = "//*[@id=\"accessoryList\"]", timeout = timeout_amount)
         accesories_products_button.click()
 
-        accesories_list_group = Table(xpath = "//*[@id=\"accessoryListDiv\"]", timeout = timeout_amount, table_children_timeout = 1)
+        accesories_list_group = Table(xpath = "//*[@id=\"accessoryListDiv\"]", timeout = timeout_amount, table_children_timeout = 2)
 
         result = ""
         for group in accesories_list_group.rows:   
-            accesories_group_products_table = Table(xpath = "/table/tbody/tr/td", parent=group, timeout = timeout_amount, table_children_timeout = 1)
+            accesories_group_products_table = Table(xpath = "/table/tbody/tr/td", parent=group, timeout = 0.1, table_children_timeout = 0.2)
             accesories_group_products_table.rows = accesories_group_products_table.rows[1:]
 
             for subgroup in accesories_group_products_table.rows:
             
-                group_wrapper = Table(xpath = "//div[@class=\"ProductInfoWrapper\"]", parent = subgroup, timeout = timeout_amount, table_children_timeout=0.1)
+                subgroup_wrapper = Table(xpath = "//div[@class=\"ProductInfoWrapper\"]", parent = subgroup, timeout = timeout_amount, table_children_timeout=0.1)
     
-                for product in group_wrapper.rows:
+                for product in subgroup_wrapper.rows:
                     part_number_textbox = TextBox(xpath = "//span[@class=\"listAttributeValue products.BaseProduct.bestNr\"]", parent = product, timeout = timeout_amount)
                     result += part_number_textbox.get_text() + ","
         
-        if result == "" or result == "Erro":
+        if result == "":
             result = "Error"
-
-        result = result[:-1]
+        else:
+            result = result[:-1]
 
     except TimeoutException:
         result = "Error"

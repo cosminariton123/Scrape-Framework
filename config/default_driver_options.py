@@ -11,7 +11,7 @@ default_chrome_options.add_argument("--incognito")
 default_edge_options = EdgeOptions()
 default_edge_options.add_argument("--start-maximized")
 default_edge_options.add_argument("--incognito")
-default_edge_options.add_argument("--headless")
+#default_edge_options.add_argument("--headless")
 
 default_firefox_options = FireFoxOptions()
 #default_firefox_options.add_argument("--start-maximized")
