@@ -1,7 +1,16 @@
-INF = 9999999999
+from simple_math_for_scraper.normal_distribution import normal_distribution_extraction
 
-NR_OF_PROCESSES = 40
+from simple_math_for_scraper.mathematical_constants import INF
 
-DELAY_BETWEEN_PROCESS_LAUNCHES = 5
+
+INF = INF
+
+
+NR_OF_PROCESSES = 20
+
+
+DELAY_BETWEEN_PROCESS_LAUNCHES = normal_distribution_extraction(0.2, 6)
+
 
 DELAY_BETWEEN_SEARCHES = 0
+
