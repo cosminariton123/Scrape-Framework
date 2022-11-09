@@ -1,5 +1,4 @@
 import os
-import time
 from matplotlib import pyplot as plt
 
 from scraper.ScraperParalelizationLevel import scraper
