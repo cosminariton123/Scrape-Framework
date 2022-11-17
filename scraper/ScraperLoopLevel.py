@@ -7,7 +7,7 @@ import core.drivers.driver_instance as driver_instance
 def scraper_loop(id_curent_process, d, searched_items, delay = 0):
 
     results = dict()
-    driver_instance.DRIVER = driver_instance.get_new_default_edge_driver()
+    driver_instance.DRIVER = driver_instance.get_new_default_chrome_driver()
 
     for item in tqdm(searched_items):
         results[item] = scraper_logic(item)
