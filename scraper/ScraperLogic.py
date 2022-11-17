@@ -1,28 +1,31 @@
-def scraper_logic(item):                #Aici e logica de scraper. Daca aveam un singur site, scriam direct aici
-                                               #Cum avem 3, consideram functia drept interfata si implementam separat ca sa putem schimba
-                                                #Implementarea dupa nevoie
+import time
 
-    
-    #from scraper.implementations import cabur
-    #return cabur.scrape_related_product(item)
+from selenium.common.exceptions import TimeoutException
 
-    #from scraper.implementations import harting
-    #return harting.scrape_related_product(item)
-    #return harting.scrape_description(item)
-    
-    #from scraper.implementations import klemsan
-    #return klemsan.scrape_related_product(item)
+import core.drivers.driver_instance as driver_instance
+from core.element_type.textbox import TextBox
+from core.element_type.button import Button
+from core.element_type.table import Table
+from core.element_type.input_textbox import InputTextBox
 
-    #from scraper.implementations import schnider
-    #return schnider.scrape_related_product(item)
+def scraper_logic(item):
 
-    #from scraper.implementations import te
-    #return te.scrape_related_product(item)
+    #This is an example
 
-    #from scraper.implementations import wago
-    #return wago.scrape_related_product(item)
+    timeout_amount = 10
+    result = "Error"
+    URL = "https://www.bing.com/"
 
-    from scraper.implementations import weidmueller
-    return weidmueller.scrape_accessories(item)
-    #return weidmueller.scrape_related_product(item)
+    try:
+        driver_instance.DRIVER.get(URL)
 
+        search_box = InputTextBox(xpath="//input[@id=\"sb_form_q\"]", timeout=timeout_amount)
+        search_box.search(item)
+
+        result_box = TextBox(xpath="//div[@id=\"d_ans\"]/div/div[1]/div/div[1]", timeout=timeout_amount)
+        result = result_box.get_text()
+
+    except TimeoutException:
+        result = "Error"
+
+    return result
